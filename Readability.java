@@ -73,3 +73,7 @@ public class Readability {
         }
     }
 }
+
+//Test Case
+// Text: Congratulations! Today is your day. You're off to Great Places! You're off and away!
+// Grade 3
