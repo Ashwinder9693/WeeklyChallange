@@ -1,1 +1,62 @@
+import java.util.*;
+
+public class SubsetSum {
+
+    // Finds subsets with the target sum
+    public static void findSubsets(int[] numbers, int target, int index, List<Integer> subset, List<List<Integer>> result) {
+        if (target == 0) {
+            result.add(new ArrayList<>(subset)); // Add subset to the result
+            return;
+        }
+
+        for (int i = index; i < numbers.length; i++) {
+            if (i == index || numbers[i] != numbers[i - 1]) { // Skip duplicates
+                if (numbers[i] <= target) {
+                    subset.add(numbers[i]); // Include current number in the subset
+                    findSubsets(numbers, target - numbers[i], i + 1, subset, result); // Recursively search for subsets
+                    subset.remove(subset.size() - 1); // Backtrack
+                }
+            }
+        }
+    }
+
+    // Finds subsets with the target sum
+    public static List<List<Integer>> subsetSum(int[] numbers, int target) {
+        Arrays.sort(numbers); // Sort the input array to handle duplicates
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> subset = new ArrayList<>();
+        findSubsets(numbers, target, 0, subset, result);
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Take user input for the array
+        System.out.print("Enter the size of the array: ");
+        int size = scanner.nextInt();
+        int[] numbers = new int[size];
+        System.out.print("Enter the array of integers separated by space: ");
+        for (int i = 0; i < size; i++) {
+            numbers[i] = scanner.nextInt();
+        }
+
+        // Take user input for the target sum
+        System.out.print("Enter the target sum: ");
+        int target = scanner.nextInt();
+
+        List<List<Integer>> subsets = subsetSum(numbers, target);
+
+        if (!subsets.isEmpty()) {
+            System.out.println("Subsets with the target sum:");
+            for (List<Integer> subset : subsets) {
+                System.out.println(subset);
+            }
+        } else {
+            System.out.println("No subset with the target sum exists.");
+        }
+
+        scanner.close();
+    }
+}
 
